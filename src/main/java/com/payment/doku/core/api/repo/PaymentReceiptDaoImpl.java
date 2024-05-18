@@ -43,7 +43,7 @@ public class PaymentReceiptDaoImpl implements PaymentReceiptDao {
         String paraList = "{" +
                 "\"user\":\"" + channel + "\"," +
                 "\"contractNo\":\"" + contractDetails.get("ContractNumber") + "\"," +
-                "\"customerName\":\"" + contractDetails.get("LeseCode") + "\"," +
+                "\"customerName\":\"" + contractDetails.get("CustomerCode") + "\"," +
                 "\"clientRefNoIn\":\"" + invoiceNo + "\"," +
                 "\"valueDate\":\"" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("DD/MM/YYYY")) + "\"," +
                 "\"amount\":\"" + amount + "\"" +
@@ -52,7 +52,7 @@ public class PaymentReceiptDaoImpl implements PaymentReceiptDao {
     }
 
     private HashMap<String, String> getContractNumberFromVirtualAccountPaymentCode(String vapc) {
-        Query query = em.createNativeQuery("SELECT Lchd_Cont_No, Lchd_L_Code FROM Lchd WHERE Lchd_Vapc = ?1");
+        Query query = em.createNativeQuery("SELECT Contract_Cont_No, Contract_L_Code FROM Contract WHERE Contract_Vapc = ?1");
         query.setParameter(1, vapc);
         List<Object[]> resultList = query.getResultList();
         return getContractDetailsFromResultSet(resultList);
@@ -65,7 +65,7 @@ public class PaymentReceiptDaoImpl implements PaymentReceiptDao {
         HashMap resultSet = new HashMap();
         for (Object[] obj : resultList) {
             resultSet.put("ContractNumber", getStringValueIfNotNull(obj[0]));
-            resultSet.put("LeseCode", getStringValueIfNotNull(obj[1]));
+            resultSet.put("CustomerCode", getStringValueIfNotNull(obj[1]));
         }
         return resultSet;
     }

@@ -31,29 +31,29 @@ public class PaymentInquiryDaoImpl implements PaymentInquiryDao {
 
     @Override
     public HashMap<String, String> getPaymentInformation(String virtualAccountPaymentCode) {
-        Query query = em.createNativeQuery("SELECT SUM (Letx_Bal)," +
-                "         Lese_Tit || ' ' || Lese_Full_Name," +
-                "         Lese_Email," +
-                "         Lese_Tel1," +
-                "         Lese_Tel2," +
-                "         Lchd_Cont_No," +
-                "         Lchd_Vapc" +
-                "    FROM Lchd, Lese, Letx" +
-                "   WHERE     Lchd_L_Code = Lese_Code" +
-                "         AND Lchd_Cont_No = Letx_Cont_No" +
-                "         AND Lchd_Status >= '0720'" +
-                "         AND Lchd_Status <> '0730'" +
-                "         AND Lchd_Status <= '0770'" +
-                "         AND NVL (Lchd_Wtof, 'N') = 'N'" +
-                "         AND Letx_Date <= TRUNC (SYSDATE)" +
-                "         AND Letx_Type IN ('D', 'G', 'D3', 'G3')" +
-                "         AND Lchd_Vapc = ?" +
-                "GROUP BY Lese_Tit || ' ' || Lese_Full_Name," +
-                "         Lese_Email," +
-                "         Lese_Tel1," +
-                "         Lese_Tel2," +
-                "         Lchd_Cont_No," +
-                "         Lchd_Vapc");
+        Query query = em.createNativeQuery("SELECT SUM (Paytx_Bal)," +
+                "         Customer_Tit || ' ' || Customer_Full_Name," +
+                "         Customer_Email," +
+                "         Customer_Tel1," +
+                "         Customer_Tel2," +
+                "         Contract_Cont_No," +
+                "         Contract_Vapc" +
+                "    FROM Contract, Customer, Paytx" +
+                "   WHERE     Contract_L_Code = Customer_Code" +
+                "         AND Contract_Cont_No = Paytx_Cont_No" +
+                "         AND Contract_Status >= '0720'" +
+                "         AND Contract_Status <> '0730'" +
+                "         AND Contract_Status <= '0770'" +
+                "         AND NVL (Contract_Wtof, 'N') = 'N'" +
+                "         AND Paytx_Date <= TRUNC (SYSDATE)" +
+                "         AND Paytx_Type IN ('D', 'G', 'D3', 'G3')" +
+                "         AND Contract_Vapc = ?" +
+                "GROUP BY Customer_Tit || ' ' || Customer_Full_Name," +
+                "         Customer_Email," +
+                "         Customer_Tel1," +
+                "         Customer_Tel2," +
+                "         Contract_Cont_No," +
+                "         Contract_Vapc");
         query.setParameter(1, virtualAccountPaymentCode);
         List<Object[]> resultList = query.getResultList();
         return getInquiryResultSet(resultList);
