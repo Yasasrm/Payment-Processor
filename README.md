@@ -2,7 +2,7 @@
 
 # About The Project
 
-This project is developed to vendor to integrate their system with Indonesia DOKU payment solution.
+This project is developed to a vendor to integrate their system with Indonesia DOKU payment solution.
 https://www.doku.com/en-US
 
 # Overview
